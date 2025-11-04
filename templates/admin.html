@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #0f2027);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 60px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            color: #00c6ff;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        form.login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00c6ff;
+        }
+
+        .links-list {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
+        }
+
+        .link-text {
+            font-size: 0.95rem;
+            word-break: break-word;
+            color: #00c6ff;
+        }
+
+        .link-text span {
+            display: block;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .delete-form button {
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            font-size: 0.9rem;
+            padding: 6px 12px;
+        }
+
+        .delete-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ff416c;
+        }
+
+        .link-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Admin Page</h1>
+
+        <form class="login-form" method="POST">
+            <input name="username" type="text" placeholder="Username">
+            <input name="password" type="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+
+        {% if login == True %}
+        <div class="links-list">
+            {% for (id, link) in data %}
+            <div class="link-item" onclick="window.open('{{ host_url + id }}','_blank')">
+                <div class="link-wrapper">
+                    <div class="link-text">
+                        <strong>{{ host_url + id }}</strong>
+                        <span>{{ link }}</span>
+                    </div>
+                    <form class="delete-form" method="POST" onclick="event.stopPropagation();">
+                        <input type="hidden" name="id_delete" value="{{ id }}">
+                        <button type="submit" name="delete_url">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
